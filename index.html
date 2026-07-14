@@ -754,27 +754,15 @@ var currentPhase = 0;
 var phaseCompleted = [false, false, false, false];
 var isPlaying = false;
 
-// ─── UNLOCK AUDIO FOR iOS ───
-function unlockAudio() {
-  var audios = [
-    document.getElementById('song1'),
-    document.getElementById('song2'),
-    document.getElementById('song3'),
-    document.getElementById('finaleSong')
-  ];
-  audios.forEach(function(a) {
-    if (a) {
-      a.volume = 0;
-      var p = a.play();
-      if (p) p.then(function() { a.pause(); a.currentTime = 0; a.volume = 1; })
-              .catch(function() { a.volume = 1; });
-    }
-  });
-}
-
 // ─── EARPHONES → OPENING ───
 document.getElementById('btnEarphones').addEventListener('click', function() {
-  unlockAudio();
+  // Prime audio for iOS - just load without playing
+  [document.getElementById('song1'),
+   document.getElementById('song2'),
+   document.getElementById('song3'),
+   document.getElementById('finaleSong')].forEach(function(a) {
+    if (a) a.load();
+  });
   showScene('sceneOpening');
   startHeartbeat();
 });
