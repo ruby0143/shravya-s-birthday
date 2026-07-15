@@ -527,13 +527,12 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
     <div class="ending-gradient"></div>
     <div class="ending-content">
       <div class="ending-emoji">🎂</div>
-      <div class="ending-title" id="endTitle">Happy Birthday, baby</div>
-      <div class="ending-subtitle" id="endSub">6 years of us. Every single moment — worth it.</div>
+      <div class="ending-title" id="endTitle">Happy Birthday, Shravya</div>
+      <div class="ending-subtitle" id="endSub">I love you infinite power infinite</div>
       <div class="ending-divider" id="endDivider"></div>
       <div class="ending-msg" id="endMsg">
-        I've sent you something on WhatsApp too.<br>Go check it when you're ready. 💌
+        Someday, I wish to travel the world with you, climb mountains, watch sunsets and build our dream life together.
       </div>
-      <div class="ending-footer" id="endFooter">with all my love — yours, always.</div>
       <button class="replay-btn" id="btnReplay">↻ Play Again</button>
     </div>
   </div>
@@ -576,7 +575,7 @@ var PHASES = [
     title: 'I Was Made for Loving You',
     artist: 'Kiss',
     tag: 'phase two',
-    lines: ['For me you are the most beautiful thing to exist —', 'most prettiest, sexiest, and lovable.', "It's very simple, Shravya. You exist, and I love you.", 'But why you always ask? Probably because —'],
+    lines: ['For me you are the most beautiful thing to exist —', 'most prettiest, sexiest, and lovable.', "It's very simple, Shravya. You exist and I love you.", 'But why? You always ask, probably because —'],
     photos: ['photo 1','photo 2','photo 3','photo 4','photo 5'],
     gradient: 'linear-gradient(135deg, #e83e8c 0%, #6f42c1 50%, #2a1a3e 100%)',
     photoHold: 6400,
@@ -587,7 +586,7 @@ var PHASES = [
     title: 'Apocalypse',
     artist: 'Cigarettes After Sex',
     tag: 'phase three',
-    lines: ['I guess every single thing was destined.', 'Everybody else had to lose you', "so that you'd end up being found by me —", 'for us to meet at exactly the right time.'],
+    lines: ['I guess every single thing was destined.', 'Everybody else had to lose you', "so that you'd end up being found by me —", 'for us to meet again at exactly the right time.'],
     photos: ['photo 1','photo 2','photo 3','photo 4','photo 5'],
     gradient: 'linear-gradient(135deg, #fd7e14 0%, #dc3545 50%, #3a0a0a 100%)',
     photoHold: 7800,
@@ -820,10 +819,8 @@ function updateTrackList() {
   });
   // Update button text
   var btn = document.getElementById('btnShuffle');
-  btn.style.display = '';
-  if (currentPhase === 0 && !phaseCompleted[0]) {
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg> SHUFFLE PLAY';
-  } else if (currentPhase < 4) {
+  if (currentPhase < 4) {
+    btn.style.display = '';
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> PLAY';
   } else {
     btn.style.display = 'none';
