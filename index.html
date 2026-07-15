@@ -331,10 +331,6 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   font-family: 'Caveat', cursive; font-size: 1.6rem; color: #ffffff;
   margin-bottom: 10px; line-height: 1.4;
 }
-.finale-name {
-  margin-top: 28px; font-size: 1.8rem; font-weight: 800;
-  color: #1DB954;
-}
 .tap-to-wrap {
   margin-top: 40px; font-size: 0.85rem; font-weight: 500;
   color: rgba(255,255,255,0.6); cursor: pointer;
@@ -476,8 +472,8 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
     <div class="playlist-meta">4 songs · made for you</div>
 
     <button class="shuffle-btn" id="btnShuffle">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
-      SHUFFLE PLAY
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      PLAY
     </button>
 
     <div class="tracklist" id="tracklist">
@@ -522,7 +518,6 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
       <p class="poem-line" id="poem1">Take my hand,</p>
       <p class="poem-line" id="poem2">Take my whole life too,</p>
       <p class="poem-line" id="poem3">For I can't help falling in love with you.</p>
-      <div class="finale-name" id="finaleName">Happy Birthday, Shravya</div>
       <div class="tap-to-wrap" id="tapToWrap">tap to wrap ♡</div>
     </div>
   </div>
@@ -1018,7 +1013,6 @@ async function playFinale() {
   var poem1 = document.getElementById('poem1');
   var poem2 = document.getElementById('poem2');
   var poem3 = document.getElementById('poem3');
-  var finaleName = document.getElementById('finaleName');
 
   // Hide the main content initially
   if (finaleContent) finaleContent.style.display = 'none';
@@ -1072,7 +1066,7 @@ async function playFinale() {
 
   // Hide content elements
   var tapToWrap = document.getElementById('tapToWrap');
-  [finalePhoto, poem1, poem2, poem3, finaleName, tapToWrap].forEach(function(el) {
+  [finalePhoto, poem1, poem2, poem3, tapToWrap].forEach(function(el) {
     if (el) el.style.display = 'none';
   });
 
@@ -1097,7 +1091,6 @@ async function playFinale() {
   if (poem3) { poem3.style.display = ''; jsFadeIn(poem3, 1200); }
 
   await wait(16000);
-  if (finaleName) { finaleName.style.display = ''; jsFadeIn(finaleName, 1500); }
 
   // Show tap to wrap indicator after a moment
   await wait(3000);
