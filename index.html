@@ -7,6 +7,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="media/pictures/album_cover.png">
+<link rel="preload" as="image" href="media/pictures/phase1_1.jpeg">
+<link rel="preload" as="image" href="media/pictures/phase1_2.jpeg">
+<link rel="preload" as="image" href="media/pictures/phase1_3.jpeg">
+<link rel="preload" as="image" href="media/pictures/phase1_4.jpeg">
+<link rel="preload" as="image" href="media/pictures/phase1_5.jpeg">
+<link rel="preload" as="image" href="media/pictures/phase2_1.png">
+<link rel="preload" as="image" href="media/pictures/phase2_2.png">
+<link rel="preload" as="image" href="media/pictures/phase2_3.png">
+<link rel="preload" as="image" href="media/pictures/phase2_4.png">
+<link rel="preload" as="image" href="media/pictures/phase2_5.png">
+<link rel="preload" as="image" href="media/pictures/phase3_1.jpg">
+<link rel="preload" as="image" href="media/pictures/phase3_2.jpg">
+<link rel="preload" as="image" href="media/pictures/phase3_3.jpg">
+<link rel="preload" as="video" href="media/pictures/phase3_4.mp4">
+<link rel="preload" as="image" href="media/pictures/phase3_5.jpg">
+<link rel="preload" as="image" href="media/pictures/phase4.jpeg">
 <style>
 :root {
   --bg: #121212;
@@ -732,6 +749,27 @@ var currentPhase = 0;
 var phaseCompleted = [false, false, false, false];
 var isPlaying = false;
 
+// ─── PRELOAD ALL MEDIA ───
+function preloadAllMedia() {
+  var allMedia = [];
+  PHASES.forEach(function(p) {
+    p.photos.forEach(function(src) { allMedia.push(src); });
+  });
+  allMedia.push('media/pictures/album_cover.png', 'media/pictures/phase4.jpeg');
+  allMedia.forEach(function(src) {
+    if (src.match(/\.(mp4|webm|ogg)$/i)) {
+      var vid = document.createElement('video');
+      vid.preload = 'auto';
+      vid.muted = true;
+      vid.src = src;
+      vid.load();
+    } else if (src.match(/\.(jpe?g|png|gif|webp)$/i)) {
+      var img = new Image();
+      img.src = src;
+    }
+  });
+}
+
 // ─── EARPHONES → OPENING ───
 document.getElementById('btnEarphones').addEventListener('click', function() {
   // Prime audio for iOS - just load without playing
@@ -741,6 +779,8 @@ document.getElementById('btnEarphones').addEventListener('click', function() {
    document.getElementById('finaleSong')].forEach(function(a) {
     if (a) a.load();
   });
+  // Preload all images and videos
+  preloadAllMedia();
   showScene('sceneOpening');
   startHeartbeat();
 });
