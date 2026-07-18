@@ -66,21 +66,9 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   filter: grayscale(0) brightness(1) contrast(1);
   box-shadow: 0 12px 50px rgba(219,72,100,0.3), 0 8px 30px rgba(0,0,0,0.5);
 }
-.cover-half {
-  width: 100%; height: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; color: #999; font-weight: 500;
-  transition: background 2s ease;
+.cover-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
-.cover-half.top { background: linear-gradient(135deg, #6a6a6a, #3a3a3a); }
-.cover-half.bot { background: linear-gradient(135deg, #5a5a5a, #2a2a2a); }
-.cover-half.top.color { background: linear-gradient(135deg, #f0c9b8, #d98a6f); }
-.cover-half.bot.color { background: linear-gradient(135deg, #e9b6a8, #c1485a); }
-.cover-divider {
-  position: absolute; top: 50%; left: 0; right: 0; height: 2px;
-  background: rgba(255,255,255,0.3); transform: translateY(-50%); z-index: 2;
-  transition: background 2s ease;
-}
-.cover-divider.color { background: rgba(219,72,100,0.5); }
 .cover-heart {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
   width: 44px; height: 44px; z-index: 5;
@@ -165,10 +153,8 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   margin-bottom: 28px; flex-shrink: 0;
 }
-.album-art-photo {
-  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-  font-size: 0.75rem; color: var(--text-dim); font-weight: 500;
+.album-art-img {
+  width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px;
 }
 .album-heart {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
@@ -441,9 +427,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   <!-- OPENING (monochrome → color bloom) -->
   <div class="scene opening" id="sceneOpening">
     <div class="cover-square" id="coverSquare">
-      <div class="cover-half top">childhood photo — top</div>
-      <div class="cover-half bot">childhood photo — bottom</div>
-      <div class="cover-divider" id="coverDivider"></div>
+      <img class="cover-img" src="media/pictures/album_cover.png" alt="Album Cover">
       <button class="cover-heart" id="coverHeart">
         <svg viewBox="0 0 32 29">
           <path d="M16 27C4 19 1 12.5 1 8.5 1 3.8 4.6 1 8.5 1 12 1 14.6 3 16 6c1.4-3 4-5 7.5-5C27.4 1 31 3.8 31 8.5 31 12.5 28 19 16 27Z"/>
@@ -460,7 +444,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   <!-- PLAYLIST LANDING -->
   <div class="scene playlist" id="scenePlaylist">
     <div class="album-art">
-      <div class="album-art-photo">childhood photo</div>
+      <img class="album-art-img" src="media/pictures/album_cover.png" alt="Album Cover">
       <div class="album-heart" id="albumHeart">
         <svg viewBox="0 0 32 29">
           <path d="M16 27C4 19 1 12.5 1 8.5 1 3.8 4.6 1 8.5 1 12 1 14.6 3 16 6c1.4-3 4-5 7.5-5C27.4 1 31 3.8 31 8.5 31 12.5 28 19 16 27Z"/>
@@ -513,7 +497,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
     <div class="finale-gradient" id="finaleGradient"></div>
     <div class="finale-content" id="finaleContent">
       <div class="finale-photo" id="finalePhoto">
-        <div class="finale-photo-inner">us, holding hands</div>
+        <img src="media/pictures/phase4.jpeg" alt="Us, holding hands" style="width:100%;height:100%;object-fit:cover;border-radius:2px;">
       </div>
       <p class="poem-line" id="poem1">Take my hand,</p>
       <p class="poem-line" id="poem2">Take my whole life too,</p>
@@ -549,10 +533,10 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 </div>
 
 <!-- AUDIO -->
-<audio id="song1" preload="auto"><source src="something-about-you.mp3" type="audio/mpeg"></audio>
-<audio id="song2" preload="auto"><source src="i-was-made-for-loving-you.mp3" type="audio/mpeg"></audio>
-<audio id="song3" preload="auto"><source src="apocalypse.mp3" type="audio/mpeg"></audio>
-<audio id="finaleSong" preload="auto"><source src="cant-help-falling-in-love.mp3" type="audio/mpeg"></audio>
+<audio id="song1" preload="auto"><source src="media/audio/something-about-you.mp3" type="audio/mpeg"></audio>
+<audio id="song2" preload="auto"><source src="media/audio/i-was-made-for-loving-you.mp3" type="audio/mpeg"></audio>
+<audio id="song3" preload="auto"><source src="media/audio/apocalypse.mp3" type="audio/mpeg"></audio>
+<audio id="finaleSong" preload="auto"><source src="media/audio/cant-help-falling-in-love.mp3" type="audio/mpeg"></audio>
 
 <script>
 var wait = function(ms) { return new Promise(function(r) { setTimeout(r, ms); }); };
@@ -565,7 +549,7 @@ var PHASES = [
     artist: 'Eyedress',
     tag: 'phase one',
     lines: ['Just who are you, really?', 'What did you bring me to my knees with?'],
-    photos: ['photo 1','photo 2','photo 3','photo 4','photo 5'],
+    photos: ['media/pictures/phase1_1.jpeg','media/pictures/phase1_2.jpeg','media/pictures/phase1_3.jpeg','media/pictures/phase1_4.jpeg','media/pictures/phase1_5.jpeg'],
     gradient: 'linear-gradient(135deg, #1DB954 0%, #134e5e 50%, #0a2a2a 100%)',
     photoHold: 4000,
     audio: null
@@ -576,7 +560,7 @@ var PHASES = [
     artist: 'Kiss',
     tag: 'phase two',
     lines: ['For me you are the most beautiful thing to exist —', 'most prettiest, sexiest, and lovable.', "It's very simple, Shravya. You exist and I love you.", 'But why? You always ask, probably because —'],
-    photos: ['photo 1','photo 2','photo 3','photo 4','photo 5'],
+    photos: ['media/pictures/phase2_1.png','media/pictures/phase2_2.png','media/pictures/phase2_3.png','media/pictures/phase2_4.png','media/pictures/phase2_5.png'],
     gradient: 'linear-gradient(135deg, #e83e8c 0%, #6f42c1 50%, #2a1a3e 100%)',
     photoHold: 6400,
     audio: null
@@ -587,8 +571,8 @@ var PHASES = [
     artist: 'Cigarettes After Sex',
     tag: 'phase three',
     lines: ['I guess every single thing was destined.', 'Everybody else had to lose you', "so that you'd end up being found by me —", 'for us to meet again at exactly the right time.'],
-    photos: ['photo 1','photo 2','photo 3','photo 4','photo 5'],
-    gradient: 'linear-gradient(135deg, #fd7e14 0%, #dc3545 50%, #3a0a0a 100%)',
+    photos: ['media/pictures/phase3_1.jpg','media/pictures/phase3_2.jpg','media/pictures/phase3_3.jpg','media/pictures/phase3_4.mp4','media/pictures/phase3_5.jpg'],
+    gradient: 'linear-gradient(135deg, #2c2c3a 0%, #1a1a2e 50%, #0d0d14 100%)',
     photoHold: 7800,
     audio: null
   }
@@ -768,7 +752,6 @@ document.getElementById('coverHeart').addEventListener('click', function() {
   heartTapped = true;
 
   var square = document.getElementById('coverSquare');
-  var divider = document.getElementById('coverDivider');
   var heart = document.getElementById('coverHeart');
   var hint = document.getElementById('openHint');
   var title = document.getElementById('openTitle');
@@ -786,9 +769,7 @@ document.getElementById('coverHeart').addEventListener('click', function() {
 
   // Add color classes for bloom
   square.classList.add('color');
-  divider.classList.add('color');
   heart.classList.add('color', 'still');
-  square.querySelectorAll('.cover-half').forEach(function(h) { h.classList.add('color'); });
 
   // Hide hint, show title
   hint.classList.add('gone');
@@ -802,6 +783,12 @@ document.getElementById('sceneOpening').addEventListener('click', function(e) {
   if (e.target.closest('.cover-heart')) return;
   fadeHeartbeat(1200).then(function() {
     showScene('scenePlaylist');
+    // Auto-start first phase after 5 seconds on first visit
+    if (currentPhase === 0 && !isPlaying) {
+      setTimeout(function() {
+        if (!isPlaying) startPhase(currentPhase);
+      }, 5000);
+    }
   });
 });
 
@@ -918,7 +905,26 @@ async function startPhase(idx) {
     card.style.setProperty('--rot', rotations[k]);
     var cardPhoto = document.createElement('div');
     cardPhoto.className = 'phase-card-photo';
-    cardPhoto.textContent = phase.photos[k];
+    if (phase.photos[k].match(/\.(jpe?g|png|gif|webp)$/i)) {
+      var img = document.createElement('img');
+      img.src = phase.photos[k];
+      img.alt = '';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:2px;';
+      cardPhoto.textContent = '';
+      cardPhoto.appendChild(img);
+    } else if (phase.photos[k].match(/\.(mp4|webm|ogg)$/i)) {
+      var vid = document.createElement('video');
+      vid.src = phase.photos[k];
+      vid.autoplay = true;
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:2px;';
+      cardPhoto.textContent = '';
+      cardPhoto.appendChild(vid);
+    } else {
+      cardPhoto.textContent = phase.photos[k];
+    }
     card.appendChild(cardPhoto);
     photos.appendChild(card);
 
@@ -1097,15 +1103,15 @@ async function playFinale() {
   await new Promise(function(resolve) {
     var resolved = false;
 
-    // Tap handler
+    // Tap handler — listen on the entire finale scene
     var tapHandler = function() {
       if (!resolved) {
         resolved = true;
-        if (tapToWrap) tapToWrap.removeEventListener('click', tapHandler);
+        fin.removeEventListener('click', tapHandler);
         resolve();
       }
     };
-    if (tapToWrap) tapToWrap.addEventListener('click', tapHandler);
+    fin.addEventListener('click', tapHandler);
 
     // Also check for song end as fallback
     var check = setInterval(function() {
@@ -1170,12 +1176,11 @@ document.getElementById('btnReplay').addEventListener('click', function() {
 
   // Reset opening scene elements
   var square = document.getElementById('coverSquare');
-  var divider = document.getElementById('coverDivider');
   var heart = document.getElementById('coverHeart');
   var hint = document.getElementById('openHint');
   var title = document.getElementById('openTitle');
-  if (square) { square.classList.remove('color'); square.querySelectorAll('.cover-half').forEach(function(h) { h.classList.remove('color'); }); }
-  if (divider) divider.classList.remove('color');
+  if (square) { square.classList.remove('color'); }
+  if (heart) { heart.classList.remove('color', 'still'); }
   if (heart) { heart.classList.remove('color', 'still'); }
   if (hint) hint.classList.remove('gone');
   if (title) title.classList.remove('show');
