@@ -713,6 +713,15 @@ function rampVolume(audio, target, ms) {
 }
 
 // ─── SCENE MANAGEMENT ───
+var sceneNames = {
+  sceneEarphones: 'Earphones (Welcome)',
+  sceneOpening: 'Opening (Heart Tap)',
+  scenePlaylist: 'Playlist',
+  scenePhase: 'Now Playing',
+  sceneFinale: 'Finale',
+  sceneEnding: 'Ending'
+};
+
 function showScene(id) {
   document.querySelectorAll('.scene').forEach(function(s) {
     s.classList.remove('active');
@@ -724,7 +733,7 @@ function showScene(id) {
   // Track every page/scene view
   gtag('event', 'page_viewed', {
     event_category: 'navigation',
-    page_name: id
+    page_name: sceneNames[id] || id
   });
 }
 
@@ -914,6 +923,15 @@ async function startPhase(idx) {
   photos.innerHTML = '';
 
   showScene('scenePhase');
+
+  // Track which song/phase is playing
+  gtag('event', 'song_playing', {
+    event_category: 'engagement',
+    phase_number: phase.num,
+    song_title: phase.title,
+    artist: phase.artist
+  });
+
   await wait(600);
 
   // Show lines one by one
@@ -1259,6 +1277,22 @@ updateTrackList();
 var deviceInfo = {
   event_category: 'engagement',
   device_type: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+  device_model: (function() {
+    var ua = navigator.userAgent;
+    // iOS devices
+    if (ua.indexOf('iPhone') > -1) return 'iPhone';
+    if (ua.indexOf('iPad') > -1) return 'iPad';
+    // Android — extract model name between "; " and " Build/" or ")"
+    var match = ua.match(/;\s*([^;)]+)\s+Build\//);
+    if (match) return match[1].trim();
+    // Fallback for other Android
+    match = ua.match(/Android[^;]*;\s*([^;)]+)/);
+    if (match) return match[1].trim();
+    // Desktop
+    if (ua.indexOf('Macintosh') > -1) return 'Mac';
+    if (ua.indexOf('Windows') > -1) return 'Windows PC';
+    return 'Unknown';
+  })(),
   browser: (function() {
     var ua = navigator.userAgent;
     if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1) return 'Chrome';
