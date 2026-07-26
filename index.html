@@ -1219,6 +1219,7 @@ async function playEnding() {
   showScene('sceneEnding');
   // Track that visitor reached the last page
   gtag('event', 'site_completed', Object.assign({event_label: 'last_page'}, deviceInfo));
+  notifyDiscord('completed');
   await wait(800);
 
   var emoji = document.querySelector('.ending-emoji');
@@ -1313,8 +1314,32 @@ var deviceInfo = {
   screen_res: screen.width + 'x' + screen.height
 };
 
+// ─── DISCORD NOTIFICATIONS ───
+var DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1530998791958692161/9mKfgslq1BCVlkGgBmGyowbWFkBRnmIpb4PRyivzpP0x6hyQNrM4Kb5Ik00YW94Amo4P';
+
+function notifyDiscord(event) {
+  var now = new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'});
+  var embed = {
+    title: event === 'opened' ? '🟢 Site Opened' : '🏁 Site Completed',
+    color: event === 'opened' ? 0x1DB954 : 0xe83e8c,
+    fields: [
+      {name: '📱 Device', value: deviceInfo.device_model + ' (' + deviceInfo.device_type + ')', inline: true},
+      {name: '🌐 Browser', value: deviceInfo.browser, inline: true},
+      {name: '💻 OS', value: deviceInfo.os, inline: true},
+      {name: '📐 Screen', value: deviceInfo.screen_res, inline: true},
+      {name: '🕐 Time (IST)', value: now, inline: true}
+    ]
+  };
+  fetch(DISCORD_WEBHOOK, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({embeds: [embed]})
+  }).catch(function() {});
+}
+
 // Track first page view (site opened)
 gtag('event', 'site_opened', Object.assign({event_label: 'first_page'}, deviceInfo));
+notifyDiscord('opened');
 
 // DEBUG: press F to jump straight to finale for testing
 document.addEventListener('keydown', function(e) {
