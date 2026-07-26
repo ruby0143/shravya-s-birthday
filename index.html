@@ -720,6 +720,12 @@ function showScene(id) {
   });
   var el = document.getElementById(id);
   if (el) el.classList.add('active');
+
+  // Track every page/scene view
+  gtag('event', 'page_viewed', {
+    event_category: 'navigation',
+    page_name: id
+  });
 }
 
 // ─── MINI PLAYER ───
