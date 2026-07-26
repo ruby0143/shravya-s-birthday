@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>S — Wrapped</title>
+
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ29JMXWVC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HQ29JMXWVC');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -1184,6 +1193,8 @@ async function playFinale() {
 // ─── ENDING SCREEN ───
 async function playEnding() {
   showScene('sceneEnding');
+  // Track that visitor reached the last page
+  gtag('event', 'site_completed', Object.assign({event_label: 'last_page'}, deviceInfo));
   await wait(800);
 
   var emoji = document.querySelector('.ending-emoji');
@@ -1237,6 +1248,33 @@ document.getElementById('btnReplay').addEventListener('click', function() {
 
 // Initialize
 updateTrackList();
+
+// ─── GOOGLE ANALYTICS CUSTOM EVENTS ───
+var deviceInfo = {
+  event_category: 'engagement',
+  device_type: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+  browser: (function() {
+    var ua = navigator.userAgent;
+    if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1) return 'Chrome';
+    if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) return 'Safari';
+    if (ua.indexOf('Firefox') > -1) return 'Firefox';
+    if (ua.indexOf('Edg') > -1) return 'Edge';
+    return 'Other';
+  })(),
+  os: (function() {
+    var ua = navigator.userAgent;
+    if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) return 'iOS';
+    if (ua.indexOf('Android') > -1) return 'Android';
+    if (ua.indexOf('Windows') > -1) return 'Windows';
+    if (ua.indexOf('Mac') > -1) return 'macOS';
+    if (ua.indexOf('Linux') > -1) return 'Linux';
+    return 'Other';
+  })(),
+  screen_res: screen.width + 'x' + screen.height
+};
+
+// Track first page view (site opened)
+gtag('event', 'site_opened', Object.assign({event_label: 'first_page'}, deviceInfo));
 
 // DEBUG: press F to jump straight to finale for testing
 document.addEventListener('keydown', function(e) {
